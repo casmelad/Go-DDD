@@ -2,6 +2,7 @@ package domain
 
 import "errors"
 
+//domain errors
 var (
 	InsufficientBalance  error = errors.New("insufficient balance")
 	InvalidAccountStatus error = errors.New("invalid account status")
