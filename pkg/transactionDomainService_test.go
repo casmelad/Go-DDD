@@ -11,6 +11,7 @@ func Test_TransactionOk(t *testing.T) {
 	from := Account{
 		account: &account{
 			balance: 1000,
+			ID:      3,
 		},
 	}
 
@@ -54,5 +55,30 @@ func Test_TransactionFailedInsufficientBalance(t *testing.T) {
 	//Assert
 	assert.Error(t, err)
 	assert.ErrorIs(t, err, TransactionNotAllowedInsufficientBalance)
+	assert.Empty(t, result)
+}
+
+func Test_TransactionFailedInvalidAccountState(t *testing.T) {
+	//Arrange
+	from := Account{
+		account: &account{
+			balance: 1000,
+		},
+	}
+
+	to := Account{
+		account: &account{
+			balance: 0,
+		},
+	}
+	transactionAmmount := float64(300)
+	domainService := TransactionDomainService{}
+
+	//Act
+	result, err := domainService.ExecuteTransaction(&from, &to, transactionAmmount)
+
+	//Assert
+	assert.Error(t, err)
+	assert.ErrorIs(t, err, InvalidAccountStatus)
 	assert.Empty(t, result)
 }

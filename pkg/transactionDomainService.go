@@ -17,7 +17,10 @@ func (t TransactionDomainService) ExecuteTransaction(from *Account, to *Account,
 		return Transaction{}, TransactionNotAllowedInsufficientBalance
 	}
 
-	from.Charge(ammount)
+	if err := from.Charge(ammount); err != nil {
+		return Transaction{}, err
+	}
+
 	to.Pay(ammount)
 
 	return newTransaction(time.Now(), *from.account, *to.account), nil

@@ -1,4 +1,4 @@
-module github.com/casmelad/domain-layer
+module github.com/casmelad/GoToDDD
 
 go 1.17
 
