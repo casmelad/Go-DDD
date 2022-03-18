@@ -1,4 +1,4 @@
-module casmelad/domain-layer
+module github.com/casmelad/domain-layer
 
 go 1.17
 
