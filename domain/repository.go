@@ -1,6 +1,6 @@
 package domain
 
 type Repository interface {
-	GetAccountByNumber(accountNumber string) error
+	GetAccountByNumber(accountNumber string) (Account, error)
 	SaveAccount(account Account) error
 }

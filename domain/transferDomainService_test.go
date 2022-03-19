@@ -21,10 +21,10 @@ func Test_TransactionOk(t *testing.T) {
 		},
 	}
 	transactionAmmount := float64(300)
-	domainService := TransactionDomainService{}
+	domainService := TransferDomainService{}
 
 	//Act
-	result, err := domainService.ExecuteTransaction(&from, &to, transactionAmmount)
+	result, err := domainService.ExecuteTransaction(from.GetAccountNumber(), to.GetAccountNumber(), transactionAmmount)
 
 	//Assert
 	assert.EqualValues(t, from.GetCurrentBalance(), float64(700))
@@ -47,14 +47,14 @@ func Test_TransactionFailedInsufficientBalance(t *testing.T) {
 		},
 	}
 	transactionAmmount := float64(3000)
-	domainService := TransactionDomainService{}
+	domainService := TransferDomainService{}
 
 	//Act
-	result, err := domainService.ExecuteTransaction(&from, &to, transactionAmmount)
+	result, err := domainService.ExecuteTransaction(from.GetAccountNumber(), to.GetAccountNumber(), transactionAmmount)
 
 	//Assert
 	assert.Error(t, err)
-	assert.ErrorIs(t, err, TransactionNotAllowedInsufficientBalance)
+	assert.ErrorIs(t, err, TransferNotAllowedInsufficientBalance)
 	assert.Empty(t, result)
 }
 
@@ -72,10 +72,10 @@ func Test_TransactionFailedInvalidAccountState(t *testing.T) {
 		},
 	}
 	transactionAmmount := float64(300)
-	domainService := TransactionDomainService{}
+	domainService := TransferDomainService{}
 
 	//Act
-	result, err := domainService.ExecuteTransaction(&from, &to, transactionAmmount)
+	result, err := domainService.ExecuteTransaction(from.GetAccountNumber(), to.GetAccountNumber(), transactionAmmount)
 
 	//Assert
 	assert.Error(t, err)
